@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Pinger</title>
+</head>
+<body>
+    <h1>Service Pinger</h1>
+    <p>Keeping the service active by pinging every 10 minutes. Check the console for logs.</p>
+
+    <div id="ping"></div>
+
+</body>
+    <script>
+        const ping = document.getElementById('ping')
+
+// Function to ping the URL
+        function pingService() {
+            const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+            const pingURL = `${corsProxy}https://docuseal-anyt.onrender.com/`;
+            console.log(`Pinging ${pingURL} at ${new Date().toISOString()}`);
+            ping.innerText = `Pinging ${pingURL} at ${new Date().toISOString()}`;
+
+            fetch(pingURL)
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Ping successful at ${new Date().toISOString()}`);
+                        ping.innerText = `Ping successful at ${new Date().toISOString()}`;
+                    } else {
+                        console.log(`Ping failed with status: ${response.status}`);
+                        ping.innerText = `Ping failed with status: ${response.status}`;
+                    }
+                })
+                .catch(error => {
+                    console.error(`Ping failed with error: ${error.message}`);
+                    ping.innerText = `Ping failed with error: ${error.message}`;
+                });
+        }
+
+        // Ping the service every 10 minutes
+        setInterval(pingService, 600000); // 600000 milliseconds = 10 minutes
+
+        // Optionally, ping immediately when the page loads
+        pingService();
+    </script>
+</html>
