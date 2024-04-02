@@ -1,12 +1,14 @@
-name: Periodic Ping
+name: Ping Service
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # Runs every 10 minutes
+    - cron: '*/10 * * * *'  # Executes every 10 minutes
 
 jobs:
-  ping:
+  ping-service:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Service
-        run: curl -X GET https://doc-ping.vercel.app/
+      - name: Ping Endpoint
+        run: |
+          curl -s https://doc-ping.vercel.app/
+          echo "Pinged the service successfully!"
